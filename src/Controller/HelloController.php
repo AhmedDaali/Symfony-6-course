@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HelloController 
+class HelloController extends AbstractController
 {
     private array $messages = ["Hello", "Hi", "Bye!"];
 
@@ -20,7 +20,11 @@ class HelloController
      * @return Response Respuesta HTTP que contiene los mensajes de saludo concatenados.
      */
     public function index(int $limit): Response{
-        return new Response (implode( ' , ' ,  array_slice($this->messages, 0, $limit)));
+        //return new Response ();
+        return $this->render('hello/index.html.twig',
+        [
+            'message'=>implode( ' , ' ,  array_slice($this->messages, 0, $limit))
+        ]);
     }
 
     //Atributo para definir la ruta del path.
@@ -35,8 +39,13 @@ class HelloController
      */
     public function showOne (int $id): Response 
     {
-        return new Response($this->messages[$id]);
-
+        return $this->render(
+            'hello/show_one.html.twig', 
+            [
+                'message'=> $this->messages[$id]
+                ]
+        );
+        //return new Response($this->messages[$id] );
     }
 
 }
