@@ -36,7 +36,6 @@ class HelloController
     public function showOne (int $id): Response 
     {
         return new Response($this->messages[$id]);
-
     }
 }
 ?>
