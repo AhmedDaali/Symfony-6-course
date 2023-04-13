@@ -9,18 +9,22 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "symfony/console": "5.4.*",
-        "symfony/dotenv": "5.4.*",
+        "symfony/console": "6.1.*",
+        "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "5.4.*",
-        "symfony/runtime": "5.4.*",
-        "symfony/yaml": "5.4.*",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/config": "^5.4"
+        "symfony/framework-bundle": "6.1.*",
+        "symfony/runtime": "6.1.*",
+        "symfony/yaml": "6.1.*",
+        "symfony/dependency-injection": "^6.1",
+        "symfony/config": "^6.1"
     },
     "require-dev": {
     },
     "config": {
+    
+    "platform": {
+        "php": "8.2.1"
+    },
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
@@ -70,7 +74,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.4.*"
+            "require": "6.1.*"
         }
     }
 }
