@@ -2,6 +2,7 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+#Si usamos el atributo "#[Route('/prova',name:'app_index')]" en el controlador no nos hace falta escribir la ruta aquí:
 #app_index: 
      #path: /
      #controller: App\Controller\HelloController::index
