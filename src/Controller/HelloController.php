@@ -24,14 +24,22 @@ class HelloController extends AbstractController
         return $this->render(
             'hello/index.html.twig',
         [
-            //Implode se usa para convertir un array en un String.
-            //Lo separamos por una coma por ejemplo.    
+            /*Implode se usa para convertir un array en un String.
+            Lo separamos por una coma por ejemplo. */   
             /*'message'=>implode( 
                 ' , ' ,  array_slice($this->messages, 0, $limit))*/
 
-            //Sino usamos implode hay que poner un for en el template 
-            //par poder renderizar el array.
-            'messages'=> array_slice($this->messages, 0, $limit)
+
+            /*Sino usamos implode hay que poner un for en el template 
+            par poder renderizar el array.*/
+            //'messages'=> array_slice($this->messages, 0, $limit)
+            
+
+            /*Aquí no hacemos la lógica, solo le pasamos al template los
+            parámetros. En el template pondremos la lógiga necesaria para 
+            renderizar el array*/
+            'messages'=> $this->messages,
+            'limit'=> $limit
         ]);
     }
 
