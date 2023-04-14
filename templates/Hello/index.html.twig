@@ -6,9 +6,18 @@
             {#Hemos definido en el controlador separar el array por comas #}
             {#{{ message }}#}
 
-            {#Sin  implode hay que hacerlo renderizar el array con un for #}
+            {#Sin el  implode hay que renderizar el array con un for 
             {% if messages | length > 0 %}
             {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+            {% else %}
+                There's nothing here yet!
+            {% endif %}#}
+
+            {#Aquí pasamos toda la lógica en el template con twig #}
+            {% if messages | length > 0 %}
+            {% for message in messages | slice(0,limit) %}
                 <div>{{ message }}</div>
             {% endfor %}
             {% else %}
