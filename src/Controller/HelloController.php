@@ -21,9 +21,17 @@ class HelloController extends AbstractController
      */
     public function index(int $limit): Response{
         //return new Response ();
-        return $this->render('hello/index.html.twig',
+        return $this->render(
+            'hello/index.html.twig',
         [
-            'message'=>implode( ' , ' ,  array_slice($this->messages, 0, $limit))
+            //Implode se usa para convertir un array en un String.
+            //Lo separamos por una coma por ejemplo.    
+            /*'message'=>implode( 
+                ' , ' ,  array_slice($this->messages, 0, $limit))*/
+
+            //Sino usamos implode hay que poner un for en el template 
+            //par poder renderizar el array.
+            'messages'=> array_slice($this->messages, 0, $limit)
         ]);
     }
 

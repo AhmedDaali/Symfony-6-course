@@ -2,7 +2,19 @@
 
     {% block body %}   
         <div>
-            {{message}}
+            {#Con implode podemos renderizar directamente el mensaje #}
+            {#Hemos definido en el controlador separar el array por comas #}
+            {#{{ message }}#}
+
+            {#Sin  implode hay que hacerlo renderizar el array con un for #}
+            {% if messages | length > 0 %}
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+            {% else %}
+                There's nothing here yet!
+            {% endif %}
+
         </div>
     {% endblock %}
     {% block title %}I've changed the title!{% endblock %}
