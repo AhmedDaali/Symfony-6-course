@@ -8,8 +8,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HelloController extends AbstractController
 {
-    private array $messages = ["Hello", "Hi", "Bye!"];
+    //private array $messages = ["Hello", "Hi", "Bye!"];
 
+    
+    private array $messages = [
+        ['message' => 'Hello', 'created' => '2022/06/12'],
+        ['message' => 'Hi', 'created' => '2022/04/12'],
+        ['message' => 'Bye!', 'created' => '2021/05/12']
+    ];
     //Atributo para definir la ruta del path.
     #[Route('/prova/{limit<\d+>?3}',name:'app_index')]
 
@@ -33,7 +39,7 @@ class HelloController extends AbstractController
             /*Sino usamos implode hay que poner un for en el template 
             par poder renderizar el array.*/
             //'messages'=> array_slice($this->messages, 0, $limit)
-            
+
 
             /*Aquí no hacemos la lógica, solo le pasamos al template los
             parámetros. En el template pondremos la lógiga necesaria para 
