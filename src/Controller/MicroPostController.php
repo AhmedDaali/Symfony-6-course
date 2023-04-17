@@ -41,11 +41,11 @@ class MicroPostController extends AbstractController
         $posts->remove($micrPost, true);*/
 
 
-        dd($posts->findAll());
+        //dd($posts->findAll());
        // dd($posts->find(1));
         //dd($posts->findOneBy(['title'=>'Welcome to US']));
         return $this->render('micro_post/index.html.twig', [
-            'controller_name' => 'MicroPostController',
+            'posts' => $posts->findAll(),
         ]);
     }
     //Buscar un post por ID sin sensio/framework
@@ -59,6 +59,8 @@ class MicroPostController extends AbstractController
     #[Route('/micro-post/{post}', name: 'app_micro_post')]
     public function showOne(Micropost $post): Response
     {
-        dd($post);
+        return $this->render('micro_post/show.html.twig', [
+            'post' => $post,
+        ]);
     }
 }
