@@ -7,6 +7,7 @@ use App\Repository\MicropostRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 /*Este es un controlador de Symfony para la entidad Micropost. El controlador contiene una sola acción "index", que está asociada a la ruta "/micro-post" y el nombre de la ruta es "app_micro_post". Esta acción utiliza la clase MicropostRepository para realizar operaciones CRUD en la tabla de base de datos correspondiente a la entidad Micropost.
@@ -66,7 +67,7 @@ class MicroPostController extends AbstractController
     }
 
     #[Route('/micro-post/add', name: 'app_micro_post_add', priority: 2)]
-    public function add(): Response
+    public function add(Request $request, MicropostRepository $posts): Response
     {
         $micrPost = new Micropost();
         $form = $this->createFormBuilder($micrPost)
@@ -74,6 +75,20 @@ class MicroPostController extends AbstractController
             ->add('text')
             ->add('submit', SubmitType :: class, ['label'=>'Save'] )
             ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $post = $form->getData();
+            $post->setCreated(new DateTime());
+            $posts->add($post, true);
+
+            //Add a flash
+            $this->addFlash('success', 'Your micro post have been added');
+            //Redirect
+            return $this->redirectToRoute('app_micro_post');
+        }
+
         return $this->renderForm(
             'micro_post/add.html.twig',
              [
