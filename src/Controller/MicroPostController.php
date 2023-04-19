@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Micropost;
 use App\Repository\MicropostRepository;
 use DateTime;
+use App\Form\MicroPostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,7 +59,7 @@ class MicroPostController extends AbstractController
     }*/
 
     //Buscar un post por ID con sensio/framework
-    #[Route('/micro-post/{post}', name: 'app_micro_post')]
+    #[Route('/micro-post/{post}', name: 'app_micro_post_show')]
     public function showOne(Micropost $post): Response
     {
         return $this->render('micro_post/show.html.twig', [
@@ -69,13 +70,14 @@ class MicroPostController extends AbstractController
     #[Route('/micro-post/add', name: 'app_micro_post_add', priority: 2)]
     public function add(Request $request, MicropostRepository $posts): Response
     {
-        $micrPost = new Micropost();
+        /*$micrPost = new Micropost();
         $form = $this->createFormBuilder($micrPost)
             ->add('title')
             ->add('text')
             //->add('submit', SubmitType :: class, ['label'=>'Save'] )
-            ->getForm();
-
+            ->getForm();*/
+        
+        $form = $this->createForm(MicroPostType::class, new MicroPost());
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -99,12 +101,13 @@ class MicroPostController extends AbstractController
     #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
     public function edit(Micropost $post, Request $request, MicropostRepository $posts): Response
     {
-        $form = $this->createFormBuilder($post)
+        /*$form = $this->createFormBuilder($post)
             ->add('title')
             ->add('text')
             //->add('submit', SubmitType :: class, ['label'=>'Save'] )
-            ->getForm();
+            ->getForm();*/
 
+        $form = $this->createForm(MicroPostType::class, $post);    
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
