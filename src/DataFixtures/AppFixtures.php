@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
 //Este es un archivo de Fixtures que utiliza la clase Micropost para cargar algunos datos de prueba en la base de datos.
-class AppFixtures extends Fixture
+class AppFixtures //extends Fixture
 {
     //Se define el método load que recibe un objeto ObjectManager como argumento.
     public function load(ObjectManager $manager): void
