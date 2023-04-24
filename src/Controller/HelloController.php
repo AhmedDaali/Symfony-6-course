@@ -5,7 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\User;
 use App\Entity\UserProfile;
-use App\Controller\MicropostController;
+use App\Controller\MicroPostController;
 use App\Repository\CommentRepository;
 use App\Entity\Comment;
 use App\Entity\Micropost;

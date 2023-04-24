@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Comment;
-use App\Entity\MicroPost;
+use App\Entity\Micropost;
 use App\Form\CommentType;
 use App\Form\MicroPostType;
 use App\Repository\CommentRepository;
@@ -12,7 +12,6 @@ use App\Repository\MicropostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /*Este es un controlador de Symfony para la entidad Micropost. El controlador contiene una sola acción "index", que está asociada a la ruta "/micro-post" y el nombre de la ruta es "app_micro_post". Esta acción utiliza la clase MicropostRepository para realizar operaciones CRUD en la tabla de base de datos correspondiente a la entidad Micropost.
 
@@ -51,7 +50,7 @@ class MicroPostController extends AbstractController
        // dd($posts->find(1));
         //dd($posts->findOneBy(['title'=>'Welcome to US']));
         return $this->render('micro_post/index.html.twig', [
-            'posts' => $posts->findAll(),
+            'posts' => $posts->findAllWithComments(),
         ]);
     }
     //Buscar un post por ID sin sensio/framework
@@ -102,7 +101,7 @@ class MicroPostController extends AbstractController
         );
     }
     #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
-    public function edit(MicroPost $post, Request $request, MicropostRepository $posts): Response
+    public function edit(Micropost $post, Request $request, MicropostRepository $posts): Response
     {
         $form = $this->createForm(MicroPostType::class, $post);
         if ($form->isSubmitted() && $form->isValid()) {
