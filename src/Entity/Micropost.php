@@ -11,7 +11,6 @@ public function setCreated(\DateTimeInterface $created): self define el método 
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\MicropostRepository;
@@ -40,12 +39,16 @@ class Micropost
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true, cascade: ['persist'])]
     private $comments;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'liked')]
+    private $likedBy;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likedBy = new ArrayCollection();
     }
 
 
@@ -116,6 +119,29 @@ class Micropost
                 $comment->setPost(null);
             }
         }
+
+        return $this;
+    }
+        /**
+     * @return Collection<int, User>
+     */
+    public function getLikedBy(): Collection
+    {
+        return $this->likedBy;
+    }
+
+    public function addLikedBy(User $likedBy): self
+    {
+        if (!$this->likedBy->contains($likedBy)) {
+            $this->likedBy[] = $likedBy;
+        }
+
+        return $this;
+    }
+
+    public function removeLikedBy(User $likedBy): self
+    {
+        $this->likedBy->removeElement($likedBy);
 
         return $this;
     }

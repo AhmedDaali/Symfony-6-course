@@ -36,18 +36,25 @@ class HelloController extends AbstractController
      */
     public function index(MicropostRepository $posts, CommentRepository $comments): Response
     {
-        // $post = new MicroPost();
-        // $post->setTitle('Hello');
-        // $post->setText('Hello');
-        // $post->setCreated(new DateTime());
+         //$post = new MicroPost();
+         //$post->setTitle('Hello');
+         //$post->setText('Hello');
+         //$post->setCreated(new DateTime());
+         //$post = $posts->find(11);
+         //$comment = new Comment();
+         //$comment->setText('Hello');
 
-        // $post = $posts->find(19);
-        // $comment = $post->getComments()[0];
-        // $comment->setPost(null);
-        // $comments->add($comment, true);
+        // $post->addComment($comment);
+
+         
+         //$comment = $post->getComments()[0];
+         //$post->removeComment($comment);
+         //$comment->setPost($post);
+         //$comments->add($comment, true);
+         //$posts->add($post, true);
         // dd($post);
 
-        
+
         // $user = new User();
         // $user->setEmail('email@email.com');
         // $user->setPassword('12345678');
