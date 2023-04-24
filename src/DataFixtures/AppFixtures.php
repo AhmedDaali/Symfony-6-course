@@ -3,12 +3,9 @@
 namespace App\DataFixtures;
 
 use DateTime;
-use App\Entity\User;
 use App\Entity\MicroPost;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 //Este es un archivo de Fixtures que utiliza la clase Micropost para cargar algunos datos de prueba en la base de datos.
 class AppFixtures extends Fixture
