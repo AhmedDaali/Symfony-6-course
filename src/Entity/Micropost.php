@@ -11,12 +11,13 @@ public function setCreated(\DateTimeInterface $created): self define el método 
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\MicropostRepository;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: MicropostRepository::class)]
 class Micropost
