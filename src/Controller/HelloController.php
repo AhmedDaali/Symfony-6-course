@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Entity\UserProfile;
+use App\Repository\UserProfileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +20,7 @@ class HelloController extends AbstractController
         ['message' => 'Bye!', 'created' => '2021/05/12']
     ];
     //Atributo para definir la ruta del path.
-    #[Route('/prova/{limit<\d+>?3}',name:'app_index')]
+    #[Route('/', name: 'app_index')]
 
        /**
      * Método que se ejecuta cuando se accede a la ruta "/prova".
@@ -25,7 +28,8 @@ class HelloController extends AbstractController
      * @param int $limit,  El número  de mensajes de saludo que se quiere obtener.
      * @return Response Respuesta HTTP que contiene los mensajes de saludo concatenados.
      */
-    public function index(int $limit): Response{
+    public function index(UserProfileRepository $profiles): Response
+    {
         //return new Response ();
         return $this->render(
             'hello/index.html.twig',
@@ -44,8 +48,19 @@ class HelloController extends AbstractController
             /*Aquí no hacemos la lógica, solo le pasamos al template los
             parámetros. En el template pondremos la lógiga necesaria para 
             renderizar el array*/
+
+            // $user = new User();
+            // $user->setEmail('email@email.com');
+            // $user->setPassword('12345678');
+
+            // $profile = new UserProfile();
+            // $profile->setUser($user);
+            // $profiles->add($profile, true);
+
+            // $profile = $profiles->find(1);
+            // $profiles->remove($profile, true);
             'messages'=> $this->messages,
-            'limit'=> $limit
+            'limit'=> 3
         ]);
     }
 
