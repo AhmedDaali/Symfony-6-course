@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Micropost;
-use App\Repository\MicropostRepository;
 use DateTime;
+use App\Entity\Comment;
+use App\Entity\MicroPost;
+use App\Form\CommentType;
 use App\Form\MicroPostType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Repository\CommentRepository;
+use App\Repository\MicropostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /*Este es un controlador de Symfony para la entidad Micropost. El controlador contiene una sola acción "index", que está asociada a la ruta "/micro-post" y el nombre de la ruta es "app_micro_post". Esta acción utiliza la clase MicropostRepository para realizar operaciones CRUD en la tabla de base de datos correspondiente a la entidad Micropost.
 
 El controlador extiende la clase AbstractController de Symfony, lo que le permite acceder a los servicios de Symfony, como el servicio de renderización de plantillas.
@@ -77,7 +80,7 @@ class MicroPostController extends AbstractController
             //->add('submit', SubmitType :: class, ['label'=>'Save'] )
             ->getForm();*/
         
-        $form = $this->createForm(MicroPostType::class, new MicroPost());
+        $form = $this->createForm(MicroPostType::class, new Micropost());
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -99,7 +102,7 @@ class MicroPostController extends AbstractController
         );
     }
     #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
-    public function edit(MicroPost $post, Request $request, MicroPostRepository $posts): Response
+    public function edit(MicroPost $post, Request $request, MicropostRepository $posts): Response
     {
         $form = $this->createForm(MicroPostType::class, $post);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -116,6 +119,35 @@ class MicroPostController extends AbstractController
              [
             'form' => $form,
              ]
+        );
+    }
+    #[Route('/micro-post/{post}/comment', name: 'app_micro_post_comment')]
+    public function addComment(Micropost $post, Request $request, CommentRepository $comments): Response
+    {
+        $form = $this->createForm(CommentType::class, new Comment());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+            $comment->setPost($post);
+            $comments->add($comment, true);
+
+            // Add a flash
+            $this->addFlash('success', 'Your comment have been updated.');
+
+            return $this->redirectToRoute(
+                'app_micro_post_show',
+                ['post' => $post->getId()]
+            );
+            // Redirect
+        }
+
+        return $this->renderForm(
+            'micro_post/comment.html.twig',
+            [
+                'form' => $form,
+                'post' => $post
+            ]
         );
     }
 }
