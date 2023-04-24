@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Entity\Comment;
+use App\Entity\Micropost;
+use App\Repository\MicropostRepository;
 use App\Repository\UserProfileRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,8 +32,30 @@ class HelloController extends AbstractController
      * @param int $limit,  El número  de mensajes de saludo que se quiere obtener.
      * @return Response Respuesta HTTP que contiene los mensajes de saludo concatenados.
      */
-    public function index(UserProfileRepository $profiles): Response
+    public function index(MicropostRepository $posts): Response
     {
+        $post = new Micropost();
+        $post->setTitle('Hello');
+        $post->setText('Hello');
+        $post->setCreated(new DateTime());
+    
+        $comment = new Comment();
+        $comment->setText('Hello');
+        // $comment->setPost($post);
+        // $post->addComment($comment);
+        $posts->add($post, true);
+
+            // $user = new User();
+            // $user->setEmail('email@email.com');
+            // $user->setPassword('12345678');
+
+            // $profile = new UserProfile();
+            // $profile->setUser($user);
+            // $profiles->add($profile, true);
+
+            // $profile = $profiles->find(1);
+            // $profiles->remove($profile, true);
+
         //return new Response ();
         return $this->render(
             'hello/index.html.twig',
@@ -49,16 +75,7 @@ class HelloController extends AbstractController
             parámetros. En el template pondremos la lógiga necesaria para 
             renderizar el array*/
 
-            // $user = new User();
-            // $user->setEmail('email@email.com');
-            // $user->setPassword('12345678');
 
-            // $profile = new UserProfile();
-            // $profile->setUser($user);
-            // $profiles->add($profile, true);
-
-            // $profile = $profiles->find(1);
-            // $profiles->remove($profile, true);
             'messages'=> $this->messages,
             'limit'=> 3
         ]);
