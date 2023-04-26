@@ -69,17 +69,19 @@ class MicroPostController extends AbstractController
         ]);
     }
 
-    #[Route('/micro-post/add', name: 'app_micro_post_add', priority: 2)]
-    public function add(Request $request, MicropostRepository $posts): Response
-    {
-        /*$micrPost = new Micropost();
-        $form = $this->createFormBuilder($micrPost)
-            ->add('title')
-            ->add('text')
-            //->add('submit', SubmitType :: class, ['label'=>'Save'] )
-            ->getForm();*/
-        
-        $form = $this->createForm(MicroPostType::class, new Micropost());
+    #[Route(
+        '/micro-post/add',
+        name: 'app_micro_post_add',
+        priority: 2
+    )]
+    public function add(
+        Request $request,
+        MicropostRepository $posts
+    ): Response {
+        $form = $this->createForm(
+            MicroPostType::class,
+            new Micropost()
+        );
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
