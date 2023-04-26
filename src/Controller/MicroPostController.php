@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\Comment;
 use App\Entity\Micropost;
 use App\Form\CommentType;
@@ -12,6 +11,7 @@ use App\Repository\MicropostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /*Este es un controlador de Symfony para la entidad Micropost. El controlador contiene una sola acción "index", que está asociada a la ruta "/micro-post" y el nombre de la ruta es "app_micro_post". Esta acción utiliza la clase MicropostRepository para realizar operaciones CRUD en la tabla de base de datos correspondiente a la entidad Micropost.
 
@@ -68,25 +68,24 @@ class MicroPostController extends AbstractController
             'post' => $post,
         ]);
     }
-
     #[Route(
         '/micro-post/add',
         name: 'app_micro_post_add',
         priority: 2
     )]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function add(
         Request $request,
-        MicropostRepository $posts
+        MicroPostRepository $posts
     ): Response {
         $form = $this->createForm(
             MicroPostType::class,
-            new Micropost()
+            new MicroPost()
         );
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $post = $form->getData();
-            $post->setCreated(new DateTime());
             $post->setAuthor($this->getUser());
             $posts->add($post, true);
 
@@ -104,6 +103,7 @@ class MicroPostController extends AbstractController
         );
     }
     #[Route('/micro-post/{post}/edit', name: 'app_micro_post_edit')]
+    #[IsGranted('ROLE_EDITOR')]
     public function edit(Micropost $post, Request $request, MicropostRepository $posts): Response
     {
         $form = $this->createForm(MicroPostType::class, $post);
@@ -125,6 +125,7 @@ class MicroPostController extends AbstractController
         );
     }
     #[Route('/micro-post/{post}/comment', name: 'app_micro_post_comment')]
+    #[IsGranted('ROLE_COMMENTER')]
     public function addComment(Micropost $post, Request $request, CommentRepository $comments): Response
     {
         $form = $this->createForm(CommentType::class, new Comment());
