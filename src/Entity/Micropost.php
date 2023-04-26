@@ -11,6 +11,7 @@ public function setCreated(\DateTimeInterface $created): self define el método 
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\MicropostRepository;
@@ -53,6 +54,7 @@ class Micropost
     {
         $this->comments = new ArrayCollection();
         $this->likedBy = new ArrayCollection();
+        $this->created = new DateTime;
     }
 
 
