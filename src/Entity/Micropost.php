@@ -45,6 +45,10 @@ class Micropost
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'liked')]
     private $likedBy;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $author;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -142,6 +146,17 @@ class Micropost
     public function removeLikedBy(User $likedBy): self
     {
         $this->likedBy->removeElement($likedBy);
+
+        return $this;
+    }
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
