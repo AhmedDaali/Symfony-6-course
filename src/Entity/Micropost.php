@@ -22,6 +22,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 #[ORM\Entity(repositoryClass: MicropostRepository::class)]
 class Micropost
 {
+    public const EDIT = 'POST_EDIT';
+    public const VIEW = 'POST_VIEW';
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
